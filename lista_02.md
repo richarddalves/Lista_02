@@ -417,7 +417,7 @@ A seguir, é fornecida a implementação da função SomarMatrizesInvestimento(m
 ```
 Função SomarMatrizesInvestimento(matrizA, matrizB):
     # Verifica se as matrizes têm o mesmo número de linhas e colunas
-    Se tamanho(matrizA) ≠ tamanho(matrizB) então:
+    Se tamanho(matrizA) != tamanho(matrizB) então:
         Retornar "As matrizes não podem ser somadas. Elas têm dimensões diferentes."
     Senão:
         linhas <- tamanho(matrizA)
@@ -450,7 +450,7 @@ Função MultiplicarMatrizesInvestimento(matrizA, matrizB):
     colunasA <- tamanho(matrizA[0])
     linhasB <- tamanho(matrizB)
 
-    Se colunasA ≠ linhasB então:
+    Se colunasA != linhasB então:
         Retornar "As matrizes não podem ser multiplicadas. Dimensões incompatíveis."
     Senão:
         linhasA <- tamanho(matrizA)
