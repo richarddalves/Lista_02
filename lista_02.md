@@ -245,6 +245,24 @@ Pedidos de R$200,00 ou mais → "Frete grátis!"
 
 Implemente um pseudocódigo que receba o valor total da compra e exiba a classificação correta do frete para o cliente.
 
+**Resposta:**
+
+```
+INÍCIO
+    // Recebe o valor total da compra
+    RECEBER valorCompra
+
+    // Verifica as condições e exibe a classificação correta
+    SE valorCompra < 50.00 ENTÃO
+        MOSTRAR "Frete não disponível!"
+    SENÃO SE valorCompra >= 50.00 E valorCompra <= 199.99 ENTÃO
+        MOSTRAR "Frete com custo adicional!"
+    SENÃO
+        MOSTRAR "Frete grátis!"
+    FIM SE
+FIM
+```
+
 ---
 
 **8)** Considere a implementação da classe base Veiculo em um sistema de modelagem de veículos. Sua tarefa é implementar, utilizando pseudocódigo, as classes derivadas Carro e Moto, que herdam da classe Veiculo, adicionando atributos específicos e métodos para calcular o consumo de combustível de um carro e de uma moto, respectivamente.
@@ -264,6 +282,77 @@ Método CalcularConsumo():
 Implementação genérica para cálculo de consumo, a ser sobrescrita pelas subclasses.
 Agora, implemente as classes Carro e Moto, garantindo que ambas herdem de Veiculo e possuam métodos específicos para calcular o consumo de combustível com base na quilometragem e eficiência do veículo.
 
+**Resposta:**
+
+```
+// Classe Veiculo (classe base)
+Classe Veiculo:
+    Atributos:
+        modelo
+        ano
+
+    Método Construtor(modelo, ano):
+        this.modelo = modelo
+        this.ano = ano
+
+    Método CalcularConsumo():
+        // Método genérico a ser sobrescrito pelas subclasses
+        RETORNAR "Método não implementado na classe base"
+
+// Classe Carro (deriva de Veiculo)
+Classe Carro HERDA Veiculo:
+    Atributos:
+        potenciaMotor  // Em cavalos (HP)
+        numeroPortas
+        eficienciaCombustivel  // Km/L
+
+    Método Construtor(modelo, ano, potenciaMotor, numeroPortas, eficienciaCombustivel):
+        CHAMAR Construtor da Superclasse(modelo, ano)
+        this.potenciaMotor = potenciaMotor
+        this.numeroPortas = numeroPortas
+        this.eficienciaCombustivel = eficienciaCombustivel
+
+    Método CalcularConsumo(quilometragem):
+        // Cálculo de consumo para carros
+        consumoLitros = quilometragem / this.eficienciaCombustivel
+
+        // Ajuste de consumo baseado na potência do motor
+        SE this.potenciaMotor > 200 ENTÃO
+            consumoLitros = consumoLitros * 1.2  // Carros potentes consomem 20% a mais
+        FIM SE
+
+        RETORNAR consumoLitros
+
+// Classe Moto (deriva de Veiculo)
+Classe Moto HERDA Veiculo:
+    Atributos:
+        cilindrada  // Em cc (centímetros cúbicos)
+        tipoMotor   // Ex: "2 tempos", "4 tempos"
+        eficienciaCombustivel  // Km/L
+
+    Método Construtor(modelo, ano, cilindrada, tipoMotor, eficienciaCombustivel):
+        CHAMAR Construtor da Superclasse(modelo, ano)
+        this.cilindrada = cilindrada
+        this.tipoMotor = tipoMotor
+        this.eficienciaCombustivel = eficienciaCombustivel
+
+    Método CalcularConsumo(quilometragem):
+        // Cálculo de consumo para motos
+        consumoLitros = quilometragem / this.eficienciaCombustivel
+
+        // Ajuste baseado na cilindrada
+        SE this.cilindrada > 500 ENTÃO
+            consumoLitros = consumoLitros * 1.15  // Motos de alta cilindrada consomem 15% a mais
+        FIM SE
+
+        // Ajuste baseado no tipo de motor
+        SE this.tipoMotor == "2 tempos" ENTÃO
+            consumoLitros = consumoLitros * 1.3  // Motores de 2 tempos consomem 30% a mais
+        FIM SE
+
+        RETORNAR consumoLitros
+```
+
 ---
 
 **9)** Você é um cientista da NASA e está ajudando no desenvolvimento de um sistema de pouso para sondas espaciais em Marte. Seu objetivo é calcular o tempo necessário para que a sonda reduza sua velocidade até um nível seguro para pouso, considerando uma velocidade inicial de entrada na atmosfera marciana e uma taxa de desaceleração constante causada pelo atrito atmosférico e retrofoguetes.
@@ -279,6 +368,45 @@ Considere a fórumla de atualização velocidade:
 ```
 
 Seu programa deve determinar quanto tempo será necessário para que a sonda atinja uma velocidade segura de pouso, sem ultrapassar os limites estabelecidos.
+
+**Resposta:**
+
+```
+INÍCIO
+    // Declaração de variáveis e entrada de dados
+    LEIA velocidadeInicial    // Velocidade de entrada na atmosfera (m/s)
+    LEIA velocidadeSegura     // Velocidade segura para pouso (m/s)
+    LEIA desaceleracao        // Taxa de desaceleração (m/s²)
+    LEIA tempoMaximo          // Tempo máximo permitido para descida (s)
+    LEIA desaceleracaoMinima  // Limite mínimo de desaceleração (m/s²)
+
+    // Verificar se a desaceleração é adequada
+    SE desaceleracao < desaceleracaoMinima ENTÃO
+        EXIBIR "ALERTA: Desaceleração abaixo do limite mínimo de segurança!"
+        EXIBIR "Ajuste os retrofoguetes para aumentar a desaceleração."
+        RETORNAR
+    FIM SE
+
+    // Calcular o tempo necessário para atingir a velocidade segura
+    tempoNecessario = (velocidadeInicial - velocidadeSegura) / desaceleracao
+
+    // Verificar se o tempo está dentro do limite máximo permitido
+    SE tempoNecessario > tempoMaximo ENTÃO
+        EXIBIR "ALERTA: Tempo de descida excede o limite máximo!"
+        EXIBIR "Tempo calculado: " + tempoNecessario + " segundos"
+        EXIBIR "Tempo máximo permitido: " + tempoMaximo + " segundos"
+        EXIBIR "Risco de desvio orbital. Abortando procedimento de pouso."
+    SENÃO
+        // Cálculo bem-sucedido
+        EXIBIR "Simulação de pouso bem-sucedida:"
+        EXIBIR "Tempo necessário para atingir velocidade segura: " + tempoNecessario + " segundos"
+        EXIBIR "Velocidade inicial: " + velocidadeInicial + " m/s"
+        EXIBIR "Velocidade final (segura): " + velocidadeSegura + " m/s"
+        EXIBIR "Taxa de desaceleração: " + desaceleracao + " m/s²"
+        EXIBIR "Prosseguir com procedimento de pouso."
+    FIM SE
+FIM
+```
 
 ---
 
@@ -313,3 +441,38 @@ ImprimirMatriz(totalInvestimentos)
 ```
 
 Agora, implemente a função MultiplicarMatrizesInvestimento(matrizA, matrizB), que multiplica as duas matrizes, simulando o efeito de diferentes fatores de crescimento e impacto financeiro nos investimentos ao longo do tempo.
+
+**Resposta:**
+
+```
+Função MultiplicarMatrizesInvestimento(matrizA, matrizB):
+    # Verificar se as dimensões são compatíveis para multiplicação de matrizes
+    colunasA <- tamanho(matrizA[0])
+    linhasB <- tamanho(matrizB)
+
+    Se colunasA ≠ linhasB então:
+        Retornar "As matrizes não podem ser multiplicadas. Dimensões incompatíveis."
+    Senão:
+        linhasA <- tamanho(matrizA)
+        colunasB <- tamanho(matrizB[0])
+
+        # Criar matriz de resultado inicializada com zeros
+        matrizResultado <- novaMatriz(linhasA, colunasB)
+
+        # Loop para realizar a multiplicação de matrizes
+        Para i de 0 até linhasA-1 faça:
+            Para j de 0 até colunasB-1 faça:
+                matrizResultado[i][j] <- 0
+                Para k de 0 até colunasA-1 faça:
+                    matrizResultado[i][j] <- matrizResultado[i][j] + (matrizA[i][k] * matrizB[k][j])
+
+        Retornar matrizResultado
+
+# Exemplo de uso da função
+investimentos <- [[1000, 2000], [1500, 2500]]
+fatoresCrescimento <- [[1.05, 1.02], [1.03, 1.08]]
+
+impactoFinanceiro <- MultiplicarMatrizesInvestimento(investimentos, fatoresCrescimento)
+Escrever("Impacto financeiro dos investimentos:")
+ImprimirMatriz(impactoFinanceiro)
+```
